@@ -1,0 +1,15 @@
+{
+  "name": "youtube-to-mp3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Gabor Majerszky",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "youtube-mp3-downloader": "^0.6.7"
+  }
+}
