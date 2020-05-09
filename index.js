@@ -55,31 +55,27 @@ app.post('/getmp3', function (req, res) {
     try {
       requestObject = JSON.parse(body);
     } catch (e) {
-      res.write('Invalid JSON');
-      res.end();
+      res.end('Invalid JSON');
       return;
     }
     if (requestObject.password !== password) {
-      res.write('Incorrect password');
-      res.end();
+      res.end('Incorrect password');
       return;
     }
-    startDownload(requestObject.id, res);
+    let fileName = requestObject.fileName ? requestObject.fileName + '.mp3' : undefined;
+    startDownload(res, requestObject.videoId, fileName);
   });
 });
 
-function startDownload(videoId, res) {
-  downloader.download(videoId);
+function startDownload(res, videoId, fileName) {
+  downloader.download(videoId, fileName);
 
   downloader.on('finished', function (err, data) {
-    res.write('Download successful');
-    res.end();
+    res.end('Download successful');
   });
 
   downloader.on('error', function (error) {
-    console.log(error);
-    res.write('Download failed');
-    res.end();
+    res.end('Download failed');
   });
 
   downloader.on('progress', function (progress) {
