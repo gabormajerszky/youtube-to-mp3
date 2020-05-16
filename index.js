@@ -77,10 +77,6 @@ function startDownload(res, videoId, fileName) {
 
   downloader.on('progress', function (progressData) {
     console.log('Progress: ' + JSON.stringify(progressData));
-    res.end(JSON.stringify({
-      status: 'progress',
-      data: progressData
-    }));
   });
 
   downloader.on('finished', function (err, finishedData) {
