@@ -71,15 +71,19 @@ function startDownload(res, videoId, fileName) {
   downloader.download(videoId, fileName);
 
   downloader.on('finished', function (err, data) {
-    res.end('Download successful');
+    console.log('Download finished: ' + JSON.stringify(data));
+    res.end('success');
   });
 
   downloader.on('error', function (error) {
-    res.end('Download failed');
+    console.log('Error: ' + JSON.stringify(error));
+    res.end('error');
   });
 
   downloader.on('progress', function (progress) {
-    console.log(JSON.stringify(progress));
+    let progressInfo = JSON.stringify(progress);
+    console.log('Progress: ' + progressInfo);
+    res.end(progressInfo);
   });
 }
 
