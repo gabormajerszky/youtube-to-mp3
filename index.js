@@ -69,21 +69,34 @@ app.post('/getmp3', function (req, res) {
 
 function startDownload(res, videoId, fileName) {
   downloader.download(videoId, fileName);
+  let downloadData = {
+    videoId: videoId,
+    fileName: fileName
+  };
+  console.log('Download started: ' + JSON.stringify(downloadData));
 
-  downloader.on('finished', function (err, data) {
-    console.log('Download finished: ' + JSON.stringify(data));
-    res.end('success');
+  downloader.on('progress', function (progressData) {
+    console.log('Progress: ' + JSON.stringify(progressData));
+    res.end(JSON.stringify({
+      status: 'progress',
+      data: progressData
+    }));
   });
 
-  downloader.on('error', function (error) {
-    console.log('Error: ' + JSON.stringify(error));
-    res.end('error');
+  downloader.on('finished', function (err, finishedData) {
+    console.log('Download finished: ' + JSON.stringify(finishedData));
+    res.end(JSON.stringify({
+      status: 'success',
+      data: finishedData
+    }));
   });
 
-  downloader.on('progress', function (progress) {
-    let progressInfo = JSON.stringify(progress);
-    console.log('Progress: ' + progressInfo);
-    res.end(progressInfo);
+  downloader.on('error', function (errorData) {
+    console.log('Error: ' + JSON.stringify(errorData));
+    res.end(JSON.stringify({
+      status: 'error',
+      data: errorData
+    }));
   });
 }
 
