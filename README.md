@@ -5,7 +5,7 @@
 cd youtube-to-mp3
 ```
 ```
-sudo forever start index.js ffmpeg=ffmpeg_path out=target_directory pw=password
+sudo forever start index.js ffmpeg=ffmpeg_path out=target_directory pw=password key=private_key_path cert=certificate_path
 ```
 Optional parameters:
 ```
